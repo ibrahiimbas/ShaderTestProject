@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SlimeMat_1
+  m_Name: EnergyBall_V1
   m_Shader: {fileID: -6465566751694194690, guid: 2a90f53ee7b70b64bb0b558fd8443ad8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
