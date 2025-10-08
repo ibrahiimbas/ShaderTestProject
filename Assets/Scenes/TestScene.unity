@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 53333567}
   - component: {fileID: 53333566}
   - component: {fileID: 53333565}
+  - component: {fileID: 53333569}
   m_Layer: 0
   m_Name: EnergyBall_1
   m_TagString: Untagged
@@ -227,6 +228,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -34.956, z: 0}
+--- !u!114 &53333569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53333564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89153af37fd262440ac013e9d3e9a8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 30
+  isRotating: 0
+  rotateOnY: 0
+  rotateOnX: 0
+  rotateOnZ: 0
+  randomizeSpeed: 0
+  minSpeed: 20
+  maxSpeed: 60
+  isGrowing: 1
+  growSpeed: 0.05
+  maxSize: 1.05
+  minSize: 0.95
 --- !u!1 &185545795
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,12 +374,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 30
+  isRotating: 1
   rotateOnY: 1
   rotateOnX: 1
   rotateOnZ: 0
   randomizeSpeed: 1
   minSpeed: 30
   maxSpeed: 60
+  isGrowing: 0
+  growSpeed: 20
+  maxSize: 2
+  minSize: 0.25
 --- !u!1 &313311591
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,13 +643,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89153af37fd262440ac013e9d3e9a8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 10
+  rotateSpeed: 5
+  isRotating: 1
   rotateOnY: 1
   rotateOnX: 0
   rotateOnZ: 0
   randomizeSpeed: 0
   minSpeed: 20
   maxSpeed: 60
+  isGrowing: 1
+  growSpeed: 0.01
+  maxSize: 1.02
+  minSize: 1
 --- !u!1 &578404853
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,12 +885,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 30
+  isRotating: 0
   rotateOnY: 1
   rotateOnX: 1
   rotateOnZ: 1
   randomizeSpeed: 1
   minSpeed: 20
   maxSpeed: 180
+  isGrowing: 0
+  growSpeed: 20
+  maxSize: 2
+  minSize: 0.25
 --- !u!1 &717425528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,18 +1228,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896033389}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89153af37fd262440ac013e9d3e9a8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 30
-  rotateOnY: 0
-  rotateOnX: 1
+  isRotating: 1
+  rotateOnY: 1
+  rotateOnX: 0
   rotateOnZ: 0
   randomizeSpeed: 0
   minSpeed: 20
   maxSpeed: 60
+  isGrowing: 0
+  growSpeed: 20
+  maxSize: 2
+  minSize: 0.25
 --- !u!1 &964004310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,12 +1367,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 30
+  isRotating: 0
   rotateOnY: 1
   rotateOnX: 0
   rotateOnZ: 0
   randomizeSpeed: 1
   minSpeed: 20
   maxSpeed: 60
+  isGrowing: 0
+  growSpeed: 20
+  maxSize: 2
+  minSize: 0.25
 --- !u!1 &1125656370
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,12 +1500,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 180
+  isRotating: 1
   rotateOnY: 1
   rotateOnX: 0
   rotateOnZ: 0
   randomizeSpeed: 0
   minSpeed: 20
   maxSpeed: 60
+  isGrowing: 1
+  growSpeed: 0.2
+  maxSize: 0.65
+  minSize: 0.5
 --- !u!1 &1428992244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,12 +1790,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 40
+  isRotating: 1
   rotateOnY: 1
   rotateOnX: 0
   rotateOnZ: 0
   randomizeSpeed: 0
   minSpeed: 20
   maxSpeed: 60
+  isGrowing: 0
+  growSpeed: 20
+  maxSize: 2
+  minSize: 0.25
 --- !u!1 &1699790531
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,12 +2032,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 30
+  isRotating: 1
   rotateOnY: 1
   rotateOnX: 1
   rotateOnZ: 1
   randomizeSpeed: 0
   minSpeed: 20
   maxSpeed: 60
+  isGrowing: 0
+  growSpeed: 20
+  maxSize: 2
+  minSize: 0.25
 --- !u!1 &2006970641
 GameObject:
   m_ObjectHideFlags: 0
@@ -2342,12 +2407,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 90
+  isRotating: 1
   rotateOnY: 1
   rotateOnX: 0
   rotateOnZ: 0
   randomizeSpeed: 0
   minSpeed: 20
   maxSpeed: 60
+  isGrowing: 0
+  growSpeed: 20
+  maxSize: 2
+  minSize: 0.25
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
