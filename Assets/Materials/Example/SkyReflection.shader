@@ -24,7 +24,7 @@ Shader "Unlit/SkyReflection"
                 float3 worldPos = mul(unity_ObjectToWorld, vertex).xyz;
                 float3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
                 float3 worldNormal = UnityObjectToWorldNormal(normal);
-                o.worldRefl = reflect(worldViewDir, worldNormal);
+                o.worldRefl = reflect(-worldViewDir, worldNormal);
                 return o;
             }
 
@@ -32,7 +32,7 @@ Shader "Unlit/SkyReflection"
             {
                half4 skyData = UNITY_SAMPLE_TEXCUBE(unity_SpecCube0, i.worldRefl);
                
-               half3 skyColor = 2*skyData.rgb * skyData.a;
+               half3 skyColor = 1.5*skyData.rgb * skyData.a;
                
                return fixed4(skyColor, 1);
             }
