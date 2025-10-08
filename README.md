@@ -1,6 +1,6 @@
 <h1>Shader Test Project</h1>
 <h3>Unity URP Project</h3>
-<p>Shader tests and examples for improve my HLSL coding skills. Basic Shader Graph and Shader Lab (HLSL) examples. Some of the HLSL codes can be found in <a href="https://docs.unity3d.com/6000.2/Documentation/Manual/built-in-shader-examples.html"> Unity HLSL examples for BRP.</a> </p>
+<p>Shader tests and examples for improve my HLSL coding skills. Includes basic Shader Graph and Shader Lab (HLSL) examples. Some of the HLSL codes can be found in <a href="https://docs.unity3d.com/6000.2/Documentation/Manual/built-in-shader-examples.html"> Unity HLSL examples for BRP.</a> </p>
 <p>Ground textures and skybox from <a href="https://polyhaven.com/">Poly Haven</a>. </p>
 
 <h2>Screenshots and Gifs</h2>
