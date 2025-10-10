@@ -1,10 +1,5 @@
-Shader "Unlit/HealthbarShader"
+Shader "Unlit/SdfShader"
 {
-    Properties
-    {
-       [NoScaleOffset] _MainTex ("Texture", 2D) = "white" {}
-        _Health ("Health", Range(0,1)) = 1.0 
-    }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
@@ -26,25 +21,21 @@ Shader "Unlit/HealthbarShader"
             struct Interpolators
             {
                 float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
-
-            sampler2D _MainTex;
-            float _Health;
-
             Interpolators vert (MeshData v)
             {
                 Interpolators o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+                o.uv = v.uv*2-1;
                 return o;
             }
 
-            float4 frag (Interpolators i) : SV_Target
+            fixed4 frag (Interpolators i) : SV_Target
             {
-                float4 col = tex2D(_MainTex, i.uv);
-                return col;
+                float dist=length(i.uv)-.3;
+                //return step(0,dist);
+                return float4(dist.xxx,0);
             }
             ENDCG
         }

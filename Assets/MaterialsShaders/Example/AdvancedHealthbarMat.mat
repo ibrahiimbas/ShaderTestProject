@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HealthbarMat
-  m_Shader: {fileID: 4800000, guid: 5bceb8b5d665efe4c83b7d852160c9be, type: 3}
+  m_Name: AdvancedHealthbarMat
+  m_Shader: {fileID: 4800000, guid: c9dceaf084f108d45994c8e0b2c575f7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -24,11 +24,16 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d636ac809f7398149ade1ab8f5aa8201, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - _BorderSize: 0.25
+    - _FlashAmount: 0.5
+    - _FlashThreshold: 0.25
+    - _Health: 0.802
+    m_Colors:
+    - _BorderColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
