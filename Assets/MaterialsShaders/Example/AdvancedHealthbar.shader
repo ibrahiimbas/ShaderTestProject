@@ -8,6 +8,16 @@ Shader "Unlit/AdvancedHealthbar"
         _BorderColor("Border Color",Color)=(1,1,1,1)
         _FlashThreshold("Flash Threshold",Range(0,1))=0.2
         _FlashAmount("Flash Amount",Range(0.1,0.9))=0.5
+        
+         _WaveFrequency("Wave Frequency", Range(0, 20)) = 0.25
+        _WaveAmplitude("Wave Amplitude", Range(0, 0.1)) = 0.02
+        _WaveSpeed("Wave Speed", Range(0, 5)) = 0.0
+        _NoiseScale("Noise Scale", Range(0, 10)) = 4.0
+        _NoiseSpeed("Noise Speed", Range(0, 2)) = 2.0
+        _FoamColor("Foam Color", Color) = (1.0, 1.0, 1.0, 0.32)
+        _FoamWidth("Foam Width", Range(0, 0.1)) = 0.0373
+        _FoamPulse("Foam Pulse",Range(0,10))= 2.0
+        _FoamIntensityAmount("Foam Intensity Amount",Range(0,5))= 5.0
     }
     SubShader
     {
@@ -46,6 +56,16 @@ Shader "Unlit/AdvancedHealthbar"
             float _FlashThreshold;
             float _FlashAmount;
 
+             float _WaveFrequency;
+            float _WaveAmplitude;
+            float _WaveSpeed;
+            float _NoiseScale;
+            float _NoiseSpeed;
+            float4 _FoamColor;
+            float _FoamWidth;
+            float _FoamPulse;
+            float _FoamIntensityAmount;
+
             Interpolators vert (MeshData v)
             {
                 Interpolators o;
@@ -59,6 +79,29 @@ Shader "Unlit/AdvancedHealthbar"
             {
                 return (v-a)/(b-a);
             }
+
+            float Hash(float2 p)
+            {
+                // "IQ Hash" - Inigo Quilez
+                return frac(sin(dot(p, float2(12.9898, 78.233))) * 43758.5453);
+            }
+
+            float Noise(float2 p)
+            {
+                float2 i = floor(p);    // Grid cell coordinates
+                float2 f = frac(p);     // Coordinates inside cell (between 0 and 1)
+                f = f * f * (3.0 - 2.0 * f);    //Cubic Hermine Curve, Same as SmoothStep()
+                // f= smoothstep(0.,1.,f);       // Same
+
+                // Four corners in 2D of a tile
+                float a = Hash(i);
+                float b = Hash(i + float2(1.0, 0.0));
+                float c = Hash(i + float2(0.0, 1.0));
+                float d = Hash(i + float2(1.0, 1.0));
+    
+                return lerp(lerp(a, b, f.x), lerp(c, d, f.x), f.y);
+            }
+
 
             float4 frag (Interpolators i) : SV_Target
             {
@@ -75,10 +118,43 @@ Shader "Unlit/AdvancedHealthbar"
                 float borderMask=1-saturate(borderSdf/pd); // For Anti-Aliasing
                 //float borderMask=step(0,-borderSdf);     // Without Anti-Aliasing
 
+
+                  // Liquid effect 
+                float2 liquidUV = i.uv;
+                if (i.uv.x < _Health)
+                {
+                    // Sin wave
+                    float wave = sin(i.uv.y * _WaveFrequency + _Time.y * _WaveSpeed) * _WaveAmplitude;
+                    
+                    // Noise distortion
+                    float noise = Noise(float2(i.uv.y * _NoiseScale, i.uv.y * _NoiseScale + _Time.y * _NoiseSpeed));
+                    float noiseOffset = (noise - 0.5) * _WaveAmplitude * 0.5;
+                    
+                    liquidUV.x += wave + noiseOffset;
+                }
+
+
                 
-                float healthbarMask=_Health > i.uv.x;          //if you want to life is increase or decrease part by part use floor(i.uv.x*partCount)/partCount;
+                float healthbarMask=_Health > liquidUV.x;          //if you want to life is increase or decrease part by part use floor(i.uv.x*partCount)/partCount;
                                                                 // Mathf.Lerp() --> clamped ... lerp() --> unclamped
+                
+                 // Foam Effect
+                float foamMask = 0;
+                float foamNoise= Noise(float2(i.uv.y * _NoiseScale, i.uv.y * _NoiseScale + _Time.y * _NoiseSpeed));
+                if (abs(i.uv.x - _Health) < _FoamWidth*foamNoise && i.uv.x <= _Health)
+                {
+                    float foamIntensity = 1 - abs(i.uv.x - _Health) / _FoamWidth;
+                    // Foam Pulse Effect
+                    foamIntensity *= (sin(_Time.y * _FoamPulse) * 0.3 + 0.7);
+                    foamMask = foamIntensity*_FoamIntensityAmount;
+                }
+
+                
                  float3 healthColor=tex2D(_MainTex,float2(_Health, i.uv.y));
+                
+                
+                // Add Foam Color Values
+                healthColor = lerp(healthColor, _FoamColor.rgb, foamMask * _FoamColor.a);
                 
                 //Flash Effect
                 if (_Health<=_FlashThreshold)
@@ -89,7 +165,11 @@ Shader "Unlit/AdvancedHealthbar"
 
                 // Combine border and health
                 float3 finalColor = lerp(_BorderColor.rgb, healthColor * healthbarMask, borderMask);
-                return float4(finalColor,1);
+                  // Alpha değerini ayarla (köpük ve border için)
+                float alpha=1;
+                alpha = max(alpha, foamMask * _FoamColor.a);
+                
+                return float4(finalColor,alpha);
                 //return float4(healthColor*healthbarMask*borderMask,1); // Without border color (black border)
             }
             ENDCG

@@ -31,9 +31,19 @@ Material:
     m_Floats:
     - _BorderSize: 0.25
     - _FlashAmount: 0.5
-    - _FlashThreshold: 0.25
-    - _Health: 0.802
+    - _FlashThreshold: 0.2
+    - _FoamIntensityAmount: 5
+    - _FoamPulse: 2
+    - _FoamWidth: 0.0373
+    - _Health: 0.578
+    - _NoiseScale: 4
+    - _NoiseSpeed: 2
+    - _WaveAmplitude: 0.02
+    - _WaveFrequency: 0.25
+    - _WaveSpeed: 0
     m_Colors:
     - _BorderColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 0.2509804}
+    - _LiquidColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
