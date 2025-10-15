@@ -13,8 +13,10 @@
 
 <img src="https://github.com/user-attachments/assets/e500fa06-5122-41e4-a33f-dd004dfb29eb"/>
 <p>In game preview of Energy Shader</p>
-</div>
 
+<img src="https://github.com/user-attachments/assets/ada76e28-4325-46b2-b915-45925e1f26da"/>
+<p>Customizable Healthbar Shader</p>
+</div>
 
 <h2>Future of This Project</h2>
 <p>I'll update this project and add new shaders. I am still learning about HLSL and some of the shaders are not very optimised or can be buggy. </p>
