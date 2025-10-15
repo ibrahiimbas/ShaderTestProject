@@ -2,16 +2,16 @@ Shader "Unlit/AdvancedHealthbar"
 {
     Properties
     {
-       [NoScaleOffset] _MainTex ("Texture", 2D) = "white" {}
+        [NoScaleOffset] _MainTex ("Texture", 2D) = "white" {}
         _Health ("Health", Range(0,1)) = 1.0
         _BorderSize("Border Size",Range(0,0.5))= 0.3
         _BorderColor("Border Color",Color)=(1,1,1,1)
-         [Toggle] _DynamicBackground("Dynamic Background",Float)= 1
+        [Toggle] _DynamicBackground("Dynamic Background",Float)= 1
         _BarBackgroundStaticColor("Bar Background Static Color",Color)=(0,0,0,1)
         _FlashThreshold("Flash Threshold",Range(0,1))=0.2
         _FlashAmount("Flash Amount",Range(0.1,0.9))=0.5
         
-         _WaveFrequency("Wave Frequency", Range(0, 20)) = 0.25
+        _WaveFrequency("Wave Frequency", Range(0, 20)) = 0.25
         _WaveAmplitude("Wave Amplitude", Range(0, 0.1)) = 0.02
         _WaveSpeed("Wave Speed", Range(0, 5)) = 0.0
         _NoiseScale("Noise Scale", Range(0, 10)) = 4.0
@@ -28,7 +28,6 @@ Shader "Unlit/AdvancedHealthbar"
         Pass
         {
             ZWrite Off
-            
             // src * SrcAlpha dst * (1-srcAlpha)
             Blend SrcAlpha OneMinusSrcAlpha //Alpha Blending
             
@@ -60,7 +59,7 @@ Shader "Unlit/AdvancedHealthbar"
             float _FlashThreshold;
             float _FlashAmount;
 
-             float _WaveFrequency;
+            float _WaveFrequency;
             float _WaveAmplitude;
             float _WaveSpeed;
             float _NoiseScale;
@@ -78,7 +77,7 @@ Shader "Unlit/AdvancedHealthbar"
                 return o;
             }
 
-            // Set thresholds to certain points. For example if a<0.2 then returns red every point...
+            // Set thresholds to certain points. For example if a<0.2 then returns red every health value...
             float InverseLerp(float a, float b, float v)
             {
                 return (v-a)/(b-a);
@@ -86,7 +85,7 @@ Shader "Unlit/AdvancedHealthbar"
 
             float Hash(float2 p)
             {
-                // "IQ Hash" - Inigo Quilez
+                // Special hash calculation ("IQ Hash" - Inigo Quilez)
                 return frac(sin(dot(p, float2(12.9898, 78.233))) * 43758.5453);
             }
 
@@ -123,7 +122,7 @@ Shader "Unlit/AdvancedHealthbar"
                 //float borderMask=step(0,-borderSdf);     // Without Anti-Aliasing
 
 
-                  // Liquid effect 
+                // Liquid effect 
                 float2 liquidUV = i.uv;
                 if (i.uv.x < _Health)
                 {
@@ -137,12 +136,11 @@ Shader "Unlit/AdvancedHealthbar"
                     liquidUV.x += wave + noiseOffset;
                 }
 
-
                 
                 float healthbarMask=_Health > liquidUV.x;          //if you want to life is increase or decrease part by part use floor(i.uv.x*partCount)/partCount;
                                                                 // Mathf.Lerp() --> clamped ... lerp() --> unclamped
                 
-                 // Foam Effect
+                // Foam Effect
                 float foamMask = 0;
                 float foamNoise= Noise(float2(i.uv.y * _NoiseScale, i.uv.y * _NoiseScale + _Time.y * _NoiseSpeed));
                 if (abs(i.uv.x - _Health) < _FoamWidth*foamNoise && i.uv.x <= _Health)
@@ -159,7 +157,7 @@ Shader "Unlit/AdvancedHealthbar"
 
                 float3 backgroundColor;
 
-                // If else state to change dynamic and static healthbar background
+                // If else state to change between dynamic and static states of healthbar background mode
                 #ifdef _DYNAMICBACKGROUND_ON
                 backgroundColor=tex2D(_MainTex,float2(_Health,i.uv.y*.75));
                 backgroundColor = lerp(backgroundColor, float3(0,0,0), 0.925);
@@ -167,7 +165,6 @@ Shader "Unlit/AdvancedHealthbar"
                 #else
                 backgroundColor=_BarBackgroundStaticColor;
                 #endif
-                
                 
                 
                 // Add Foam Color Values
