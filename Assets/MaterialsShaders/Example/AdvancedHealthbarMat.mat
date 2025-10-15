@@ -38,7 +38,7 @@ Material:
     - _FoamIntensityAmount: 5
     - _FoamPulse: 2
     - _FoamWidth: 0.03
-    - _Health: 0.584
+    - _Health: 0.486
     - _IsBackgroundDynamic: 1
     - _NoiseScale: 4
     - _NoiseSpeed: 2

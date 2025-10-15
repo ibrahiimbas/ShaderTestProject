@@ -161,7 +161,7 @@ Shader "Unlit/AdvancedHealthbar"
 
                 // If else state to change dynamic and static healthbar background
                 #ifdef _DYNAMICBACKGROUND_ON
-                backgroundColor=tex2D(_MainTex,float2(_Health,i.uv.y*128));
+                backgroundColor=tex2D(_MainTex,float2(_Health,i.uv.y*.75));
                 backgroundColor = lerp(backgroundColor, float3(0,0,0), 0.925);
                 backgroundColor *= 0.8;
                 #else
