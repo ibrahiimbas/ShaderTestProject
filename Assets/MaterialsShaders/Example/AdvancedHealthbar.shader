@@ -6,6 +6,8 @@ Shader "Unlit/AdvancedHealthbar"
         _Health ("Health", Range(0,1)) = 1.0
         _BorderSize("Border Size",Range(0,0.5))= 0.3
         _BorderColor("Border Color",Color)=(1,1,1,1)
+         [Toggle] _DynamicBackground("Dynamic Background",Float)= 1
+        _BarBackgroundStaticColor("Bar Background Static Color",Color)=(0,0,0,1)
         _FlashThreshold("Flash Threshold",Range(0,1))=0.2
         _FlashAmount("Flash Amount",Range(0.1,0.9))=0.5
         
@@ -33,6 +35,7 @@ Shader "Unlit/AdvancedHealthbar"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature _DYNAMICBACKGROUND_ON
 
             #include "UnityCG.cginc"
 
@@ -53,6 +56,7 @@ Shader "Unlit/AdvancedHealthbar"
             float _Health;
             float _BorderSize;
             float4 _BorderColor;
+            float4 _BarBackgroundStaticColor;
             float _FlashThreshold;
             float _FlashAmount;
 
@@ -149,8 +153,21 @@ Shader "Unlit/AdvancedHealthbar"
                     foamMask = foamIntensity*_FoamIntensityAmount;
                 }
 
+                //Healthbar main texture
+                float3 healthColor=tex2D(_MainTex,float2(_Health, i.uv.y));
+
+
+                float3 backgroundColor;
+
+                // If else state to change dynamic and static healthbar background
+                #ifdef _DYNAMICBACKGROUND_ON
+                backgroundColor=tex2D(_MainTex,float2(_Health,i.uv.y*128));
+                backgroundColor = lerp(backgroundColor, float3(0,0,0), 0.925);
+                backgroundColor *= 0.8;
+                #else
+                backgroundColor=_BarBackgroundStaticColor;
+                #endif
                 
-                 float3 healthColor=tex2D(_MainTex,float2(_Health, i.uv.y));
                 
                 
                 // Add Foam Color Values
@@ -163,9 +180,11 @@ Shader "Unlit/AdvancedHealthbar"
                     healthColor*=flash;
                 }
 
+                // HealthBar Background color
+                float3 barColor=lerp(backgroundColor, healthColor,healthbarMask); 
+
                 // Combine border and health
-                float3 finalColor = lerp(_BorderColor.rgb, healthColor * healthbarMask, borderMask);
-                  // Alpha değerini ayarla (köpük ve border için)
+                float3 finalColor = lerp(_BorderColor.rgb, barColor, borderMask);
                 float alpha=1;
                 alpha = max(alpha, foamMask * _FoamColor.a);
                 
