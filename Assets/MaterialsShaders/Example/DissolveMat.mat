@@ -25,7 +25,7 @@ Material:
     m_TexEnvs:
     - _DissolveTex:
         m_Texture: {fileID: 2800000, guid: 77fd9bd0d60c1ea4ab78eff8f527fa86, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _DissolveTex2:
         m_Texture: {fileID: 2800000, guid: e17c433351d970b43a4eb0497b5cf451, type: 3}
@@ -39,12 +39,12 @@ Material:
     m_Floats:
     - _AlphaCutoff: 0
     - _Cull: 2
-    - _DissolveAmount: 0.06
-    - _DissolveEdgeWidth: 0.03
+    - _DissolveAmount: 0.03
+    - _DissolveEdgeWidth: 0.045
     - _DistortionStrength: 0
     - _EdgeEmission: 10
     - _NoiseBlend: 0.55
-    - _PulseIntensity: 0.75
+    - _PulseIntensity: 0.6
     - _PulseSpeed: 2.56
     - _SparkleIntensity: 0.37
     - _SparkleSize: 3.3
@@ -52,7 +52,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor1: {r: 1, g: 0.10764718, b: 0, a: 1}
-    - _EdgeColor2: {r: 1, g: 0.70148605, b: 0, a: 1}
+    - _EdgeColor2: {r: 1, g: 0.4454183, b: 0, a: 1}
     - _ScrollSpeed: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
