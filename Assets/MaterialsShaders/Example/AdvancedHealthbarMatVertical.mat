@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AdvancedHealthbarMat
+  m_Name: AdvancedHealthbarMatVertical
   m_Shader: {fileID: 4800000, guid: c9dceaf084f108d45994c8e0b2c575f7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -33,12 +33,12 @@ Material:
     m_Floats:
     - _AspectRatio: 1
     - _BorderSize: 0.1
-    - _BubbleAspectRatio: 8
+    - _BubbleAspectRatio: 5
     - _BubbleCount: 20
     - _BubbleDensity: 1
     - _BubbleFadeInOut: 0.85
     - _BubbleGlow: 3
-    - _BubbleMoveRange: 1
+    - _BubbleMoveRange: 0.1
     - _BubbleRandomMovement: 0.5
     - _BubbleRiseSpeed: 1.36
     - _BubbleSize: 0.1
@@ -52,7 +52,7 @@ Material:
     - _FoamIntensityAmount: 5
     - _FoamPulse: 2
     - _FoamWidth: 0.03
-    - _Health: 0.73
+    - _Health: 1
     - _IsBackgroundDynamic: 1
     - _NoiseScale: 4
     - _NoiseSpeed: 2
@@ -65,7 +65,7 @@ Material:
     - _BarBackgroundStaticColor: {r: 0.21698111, g: 0.10737402, b: 0.041963324, a: 1}
     - _BorderColor: {r: 0, g: 0, b: 0, a: 1}
     - _BubbleColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BubbleMoveDirection: {r: 0, g: 1, b: 0, a: 0}
+    - _BubbleMoveDirection: {r: 1, g: 0, b: 0, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0.11764706}
     - _LiquidColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
