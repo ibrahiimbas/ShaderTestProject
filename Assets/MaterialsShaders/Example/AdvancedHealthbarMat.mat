@@ -37,22 +37,22 @@ Material:
     - _BubbleCount: 20
     - _BubbleDensity: 1
     - _BubbleFadeInOut: 0.85
-    - _BubbleGlow: 3
-    - _BubbleMoveRange: 1
+    - _BubbleGlow: 2.28
+    - _BubbleMoveRange: 0.5
     - _BubbleRandomMovement: 0.5
     - _BubbleRiseSpeed: 1.36
     - _BubbleSize: 0.1
     - _BubbleSizeVariation: 1
     - _BubbleSpawnArea: 1
-    - _BubbleSpawnRandomness: 0.8
-    - _BubbleSpeed: 0.78
+    - _BubbleSpawnRandomness: 0.25
+    - _BubbleSpeed: 0.8
     - _DynamicBackground: 1
     - _FlashAmount: 0.25
     - _FlashThreshold: 0.2
     - _FoamIntensityAmount: 5
     - _FoamPulse: 2
     - _FoamWidth: 0.03
-    - _Health: 0.73
+    - _Health: 0.37
     - _IsBackgroundDynamic: 1
     - _NoiseScale: 4
     - _NoiseSpeed: 2
