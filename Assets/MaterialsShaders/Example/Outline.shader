@@ -1,102 +1,113 @@
 Shader "Unlit/Outline"
 {
-     Properties
+    Properties
     {
-        _MainTex ("Main Texture", 2D) = "white" {}
-        _Color ("Main Color", Color) = (1,1,1,1)
-        _OutlineColor ("Outline Color", Color) = (1,0,0,1)
-        _OutlineWidth ("Outline Width", Range(0.0, 0.1)) = 0.01
+        _BaseMap ("Base Map", 2D) = "white" {}
+        _BaseColor ("Base Color", Color) = (1,1,1,1)
+        _OutlineColor ("Outline Color", Color) = (0,0,0,1)
+        _OutlineWidth ("Outline Width", Range(0, 0.05)) = 0.02
     }
-    
+
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        
+        Tags
+        {
+            "RenderPipeline"="UniversalPipeline"
+            "RenderType"="Opaque"
+            "Queue"="Geometry+1"
+        }
+
+        // ---------- OUTLINE ----------
         Pass
         {
-            Name "OUTLINE"
+            Name "Outline"
             Cull Front
-            ZWrite On
-            
-            CGPROGRAM
+            ZWrite Off
+            ZTest LEqual
+
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #include "UnityCG.cginc"
-            
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+            struct Attributes
+            {
+                float4 positionOS : POSITION;
+                float3 normalOS   : NORMAL;
+            };
+
+            struct Varyings
+            {
+                float4 positionHCS : SV_POSITION;
+            };
+
             float _OutlineWidth;
             float4 _OutlineColor;
-            
-            struct appdata
+
+            Varyings vert (Attributes v)
             {
-                float4 vertex : POSITION;
-                float3 normal : NORMAL;
-            };
-            
-            struct v2f
-            {
-                float4 pos : SV_POSITION;
-            };
-            
-            v2f vert(appdata v)
-            {
-                v2f o;
-                
-                v.vertex.xyz += normalize(v.normal) * _OutlineWidth;
-                
-                o.pos = UnityObjectToClipPos(v.vertex);
+                Varyings o;
+
+                float3 normalWS = TransformObjectToWorldNormal(v.normalOS);
+                float3 posWS    = TransformObjectToWorld(v.positionOS.xyz);
+
+                posWS += normalWS * _OutlineWidth;
+
+                o.positionHCS = TransformWorldToHClip(posWS);
                 return o;
             }
-            
-            fixed4 frag(v2f i) : SV_Target
+
+            half4 frag (Varyings i) : SV_Target
             {
                 return _OutlineColor;
             }
-            ENDCG
+            ENDHLSL
         }
-        
+
+        // ---------- OBJECT ----------
         Pass
         {
-            Name "OBJECT"
+            Name "Object"
             Cull Back
             ZWrite On
-            
-            CGPROGRAM
+
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #include "UnityCG.cginc"
-            
-            struct appdata
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+            struct Attributes
             {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
+                float4 positionOS : POSITION;
+                float2 uv         : TEXCOORD0;
             };
-            
-            struct v2f
+
+            struct Varyings
             {
-                float2 uv : TEXCOORD0;
-                float4 pos : SV_POSITION;
+                float4 positionHCS : SV_POSITION;
+                float2 uv          : TEXCOORD0;
             };
-            
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-            float4 _Color;
-            
-            v2f vert(appdata v)
+
+            TEXTURE2D(_BaseMap);
+            SAMPLER(sampler_BaseMap);
+            float4 _BaseMap_ST;
+            float4 _BaseColor;
+
+            Varyings vert (Attributes v)
             {
-                v2f o;
-                o.pos = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                Varyings o;
+                o.positionHCS = TransformObjectToHClip(v.positionOS.xyz);
+                o.uv = TRANSFORM_TEX(v.uv, _BaseMap);
                 return o;
             }
-            
-            fixed4 frag(v2f i) : SV_Target
+
+            half4 frag (Varyings i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv) * _Color;
-                return col;
+                return SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, i.uv) * _BaseColor;
             }
-            ENDCG
+            ENDHLSL
         }
     }
-    
-    FallBack "Diffuse"
 }
